@@ -1,0 +1,67 @@
+service:
+  id: 1
+  name: health-check
+  namespace: go
+  instanceId: sadasq3e21kjerfehqw21
+  version: 1.0.0
+  mode: development # development, stage or production
+  commitId: asdasd
+  gracefulShutdownSecond: 10
+  api:
+    isEnabled: true
+    mode: debug # debug, release or test
+    host: localhost
+    port: 8001
+  grpc:
+    isEnabled: true
+    port: 8002
+    isDevelopment: true
+
+jwt:
+  algorithm: RS512
+  publicKey: "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCOVSFfbrSphqpMkOp+vCWkSYiu\nIFUONM366m2N0WuUeRANwimipKydERSiyu//u1zizvN5kQZ+ANK5oxFaZrOqvP5/\nSn/EKNqx+ydRNXN5EgbkjD8tcAciMM/Ivd37IlZH2yAmAQzUWtk/uBb5piuGS90i\ngTyoKeICImSjjhoClQIDAQAB\n-----END PUBLIC KEY-----"
+  privateKey: "-----BEGIN RSA PRIVATE KEY-----\nMIICXQIBAAKBgQCOVSFfbrSphqpMkOp+vCWkSYiuIFUONM366m2N0WuUeRANwimi\npKydERSiyu//u1zizvN5kQZ+ANK5oxFaZrOqvP5/Sn/EKNqx+ydRNXN5EgbkjD8t\ncAciMM/Ivd37IlZH2yAmAQzUWtk/uBb5piuGS90igTyoKeICImSjjhoClQIDAQAB\nAoGAd2YAre7PjRrTx5EVtaUdqpipGPE0iMtRM7jumDZimdWI2xHTHYYo60XF2t6E\nwDGrtPRImOVI3fDQ1TtvNjfLZR/2GqT65Z8sGA2G8r9h/IRiosAjDV2H0Al2dU6s\np2WNiM7Lmo9nRFbkv3owYm0n5sxUM6WahX2Mlncsp6JAHK0CQQDV+yPHHQGl6Uiz\nq/UGjhJ8AdhXAsVxRHLLO4cHumG43Rt7Eek4SsS/pgE/xOIojo78ODNmA1dMl2FO\nfpI9+DIfAkEAqkg10Fm1ngpcFG/5Q4aNl3ssRz0nUYPNHP3NRBVGi0oCvW9cZHeh\n/d2+kzebf+442aTjNu3iia3eCdbFnhU8ywJBAM4kQzNvHkdXllKBNmw6MlSE8oXg\nhZW4+14O2ub3B22wlOjbOHKilSiMJGfqpHWt4NHa0qlUTqXasEOObBSHJsECQGgs\nBufwicAmfFBwdCCQRzzduKfYTJ58sFXFGvdEwMRjwatcXjyER5DEQFtV0IaCGTtk\nuTAYdddei5CfWIQuX+MCQQC0/CySPoXLzR3vFg8XWTTEK5lokonlob4ZfRnSBJNu\nX0WtFj7MAWmFRAmXRG2yiCMMSA0/3xZ14CBwwoKHwx/4\n-----END RSA PRIVATE KEY-----"
+  expiresAtMinute: 10
+
+logger:
+  isDevelopment: true
+  disableStacktrace: false
+  disableStdout: true
+  level: info # debug, info, warn, error, dPanic, panic or fatal
+  elk:
+    url: localhost:50000
+    timeoutSecond: 5
+  gorm:
+    slowThresholdMilliseconds: 200
+    ignoreRecordNotFoundError: false
+    parameterizedQueries: false
+
+tracer:
+  IsEnabled: true
+  Sampler: true
+  UseStdout: false
+  host: localhost
+  port: 6831
+
+postgres:
+  host: localhost
+  port: 5432
+  user: admin
+  password: admin
+  databaseName: health_check
+  sslMode: disable # enable or disable
+  timeZone: Asia/Tehran
+
+redis:
+  host: localhost
+  port: 6379
+
+notification:
+  discord:
+    botToken: 111
+    channelIds:
+      - 1
+#  slack:
+#    apiToken:
+#    channelIds:
+#      - 1204915943634108527

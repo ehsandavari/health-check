@@ -1,0 +1,86 @@
+version: '3.9'
+
+include:
+  - "elk/docker-compose.yml"
+
+services:
+  service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      POSTGRES_HOST: postgresql
+      LOGGER_ELK_URL: 0.0.0.0:50000
+      TRACER_HOST: jaeger
+      REDIS_HOST: redis
+      SERVICE_API_HOST: 0.0.0.0
+      SERVICE_API_MODE: release
+    networks:
+      - backend
+    ports:
+      - "8080:8001"
+      - "8082:8002"
+
+
+  postgresql:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+    networks:
+      - backend
+
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+    volumes:
+      - jaeger:/tmp
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+    networks:
+      - backend
+
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - backend
+
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "9251:8081"
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+
+networks:
+  backend:
+
+volumes:
+  postgresql:
+  jaeger:
+  redis:
